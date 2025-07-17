@@ -18,14 +18,23 @@ var connectionString = dbProvider switch
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    if (dbProvider == "mysql")
-    {
-        options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
-    }
-    else
-    {
+    // if (dbProvider == "mysql")
+    // {
+    //     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+    // }
+
         options.UseSqlite(connectionString);
-    }
 });
 
 // ... rest of the code ...
+var app = builder.Build();
+
+// Optional: Configure middleware
+app.UseRouting();
+app.UseAuthorization(); // If you're using authentication
+
+// Map your controllers
+app.MapControllers();
+
+// Run the app
+app.Run();
